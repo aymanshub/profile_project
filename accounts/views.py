@@ -1,9 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+
+from . import forms
 
 
 def sign_in(request):
@@ -46,7 +49,7 @@ def sign_up(request):
                 request,
                 "You're now a user! You've been signed in, too."
             )
-            return HttpResponseRedirect(reverse('home'))  # TODO: go to profile
+            return HttpResponseRedirect(reverse('accounts:edit_profile'))  # TODO: go to profile
     return render(request, 'accounts/sign_up.html', {'form': form})
 
 
@@ -54,3 +57,42 @@ def sign_out(request):
     logout(request)
     messages.success(request, "You've been signed out. Come back soon!")
     return HttpResponseRedirect(reverse('home'))
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        user_form = forms.UserForm(request.POST, request.FILES,
+                                   instance=request.user)
+        profile_form = forms.ProfileForm(request.POST, request.FILES,
+                                         instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return HttpResponseRedirect(reverse('accounts:view_profile'))
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        user_form = forms.UserForm(instance=request.user)
+        profile_form = forms.ProfileForm(instance=request.user.profile)
+    return render(request, 'accounts/edit_profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+
+
+@login_required
+def view_profile(request):
+    user_form = forms.UserForm()
+    profile_form = forms.ProfileForm()
+    if request.method == 'GET':
+        user_form = forms.UserForm(data=None,
+                                   instance=request.user)
+        profile_form = forms.ProfileForm(data=None,
+                                         instance=request.user.profile)
+    return render(request, 'accounts/view_profile.html',
+                  {
+                      'user_form': user_form,
+                      'profile_form': profile_form,
+                   })

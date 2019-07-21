@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}Profile | {{ super }}{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Your Profile</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="container mt-3 row">
+        <div class="col-md-4 pb-4">
+            <div class="profile-img">
+                <img class= "img-fluid rounded d-none d-sm-block" src="{{ profile_form.instance.avatar.url }}" alt="..."/>
+            </div>
+        </div>
+        <div class="col-md-8">
+        {% for field in user_form.visible_fields %}
+            <div>
+                <dl class="row">
+                  <dt class="col-sm-4 h4 font-weight-normal">{{ field.label_tag }}</dt>
+                  <dd class="col-sm-8 h3 font-weight-normal text-secondary">{{ field.value }}</dd>
+                </dl>
+            </div>
+        {% endfor %}
+        {% for field in profile_form.visible_fields %}
+            {% if field.name != "avatar" %}
+            <div>
+                <dl class="row">
+                  <dt class="col-sm-4 h4 font-weight-normal">{{ field.label_tag }}</dt>
+                  <dd class="col-sm-8 h3 font-weight-normal text-secondary">{{ field.value }}</dd>
+                </dl>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}
