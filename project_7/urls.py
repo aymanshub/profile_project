@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^$', views.home, name='home'),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 urlpatterns += staticfiles_urlpatterns()
 if settings.DEBUG:

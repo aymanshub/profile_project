@@ -1,4 +1,5 @@
-{% load static from staticfiles %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,10 @@
     <!-- Basic Page Needs
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
-    <title>{% block title %}Circle{% endblock %}</title>
+    <title>Profile | </title>
+
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
 
     <!-- Mobile Specific Metas
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -22,7 +26,7 @@
     <!-- CSS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-    <link rel="stylesheet" href="{% static "css/global.css" %}">
+    <link rel="stylesheet" href="/static/css/global.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         .dropdown-item:focus, .dropdown-item:hover {
@@ -42,13 +46,13 @@
     <script type="text/javascript"
             src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type="text/javascript"
-            src="{% static "js/autogrow.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/global.js" %}"></script>
+            src="/static/js/autogrow.js"></script>
+    <script type="text/javascript" src="/static/js/global.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    {% block js_fc_datepicker %}{% endblock %}
+
 
 </head>
 <body>
@@ -57,40 +61,36 @@
         <div class="circle--fluid">
             <div class="circle--fluid--cell">
                 <h1 class="hide-text circle--logo"><a class="logo"
-                                                      href="{% url 'home' %}">Circle</a>
+                                                      href="/">Circle</a>
                 </h1>
             </div>
             <div class="circle--fluid--cell circle--fluid--primary">
                 <nav>
                     <ul class="circle--inline">
-                        {% if user.is_authenticated %}
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   Account
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown"> <!-- style="background-color: #537d7b" -->
-                                  <a class="dropdown-item" href="{% url 'accounts:edit_profile' %}">Edit Profile</a>
+                                  <a class="dropdown-item" href="/accounts/profile/edit/">Edit Profile</a>
                                   <a class="dropdown-item" href="#">Change Password</a>
                                 </div>
                             </li>
-                        {% endif %}
+
                     </ul>
                 </nav>
             </div>
             <div class="circle--fluid--cell circle--fluid--secondary">
                 <nav>
                     <ul class="circle--inline">
-                        {% if not user.is_authenticated %}
-                            <li><a href="{% url 'accounts:sign_up' %}">Sign Up</a></li>
-                            <li><a href="{% url 'accounts:sign_in' %}">Sign
-                                In</a></li>
-                        {% else %}
+
                             <!-- view profile link here? -->
                             <!-- edit profile link here? -->
-                            <li><a href="{% url 'accounts:view_profile' %}">View Profile</a></li>
-{#                            <li><a href="#">Edit Profile</a></li>#}
-                            <li><a href="{% url 'accounts:sign_out' %}">Sign Out</a></li>
-                        {% endif %}
+                            <li><a href="/accounts/profile/">View Profile</a></li>
+
+                            <li><a href="/accounts/sign_out/">Sign Out</a></li>
+
                     </ul>
                 </nav>
             </div>
@@ -99,17 +99,38 @@
 </header>
 
 <div class="bounds circle--page">
-    {% if messages %}
-        <ul class="messages centered grid-50">
-            {% for message in messages %}
-                <li{% if message.tags %}
-                    class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+
     <div class="container">
-        {% block body %}{% endblock %}
+
+
+<form method="POST" action="/accounts/profile/edit/" enctype="multipart/form-data">
+    <input type='hidden' name='csrfmiddlewaretoken' value='gDzVm4hh0BPPfwWMkOSfANG1zisFhKIj' />
+    <p><label for="id_first_name">First name:</label> <input id="id_first_name" maxlength="30" name="first_name" type="text" value="Ayman" /></p>
+<p><label for="id_last_name">Last name:</label> <input id="id_last_name" maxlength="30" name="last_name" type="text" value="Said" /></p>
+    <p><label for="id_email">Email:</label> <input id="id_email" maxlength="254" name="email" type="email" value="Ayman-Said@live.com" /></p>
+<p><label for="id_birth_date">Birth date:</label> <input id="id_birth_date" name="birth_date" type="text" value="1981-04-19" /></p>
+<p><label for="id_bio">Bio:</label> <textarea id="editor" cols="40" id="id_bio" name="bio" rows="10">
+0123456789</textarea></p>
+<p><label for="id_avatar">Avatar:</label> Currently: <a href="/media/avatars/20170108_161243.jpg">avatars/20170108_161243.jpg</a> <input id="avatar-clear_id" name="avatar-clear" type="checkbox" /> <label for="avatar-clear_id">Clear</label><br />Change: <input id="id_avatar" name="avatar" type="file" /></p>
+<p><label for="id_city">City:</label> <input id="id_city" maxlength="30" name="city" type="text" value="Kafr-Yaseef" /></p>
+<p><label for="id_state">State:</label> <input id="id_state" maxlength="30" name="state" type="text" value="Acre" /></p>
+<p><label for="id_country_of_residence">Country of residence:</label> <input id="id_country_of_residence" maxlength="30" name="country_of_residence" type="text" value="Israel" /></p>
+<p><label for="id_favorite_animal">Favorite animal:</label> <input id="id_favorite_animal" maxlength="30" name="favorite_animal" type="text" value="cat" /></p>
+<p><label for="id_hobby">Hobby:</label> <input id="id_hobby" maxlength="30" name="hobby" type="text" value="swimming" /></p>
+    <input type="submit" class="button-primary" value="Save Profile">
+</form>
+
     </div>
 </div>
+<!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <!-- Initialize Quill editor -->
+    <script>
+      var quill = new Quill('#editor', {
+        theme: 'snow'
+      });
+    </script>
+
 </body>
 </html>

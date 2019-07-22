@@ -1,12 +1,18 @@
 {% extends "layout.html" %}
 
 {% block title %}Profile | {{ super }}{% endblock %}
+{% block js_fc_datepicker %}
+  <!-- Fengyuan Chen's Datepicker -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+{% endblock %}
 
 {% block body %}
 {#<form method="POST" enctype="multipart/form-data">#}
 <form method="POST" action="{% url 'accounts:edit_profile' %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ user_form.as_p }}
+    {{ profile_form.media }}
     {{ profile_form.as_p }}
     <input type="submit" class="button-primary" value="Save Profile">
 </form>

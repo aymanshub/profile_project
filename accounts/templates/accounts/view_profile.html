@@ -26,11 +26,11 @@
             </div>
         {% endfor %}
         {% for field in profile_form.visible_fields %}
-            {% if field.name != "avatar" %}
+            {% if field.name != "avatar" and field.name != "verify_email" %}
             <div>
                 <dl class="row">
                   <dt class="col-sm-4 h4 font-weight-normal">{{ field.label_tag }}</dt>
-                  <dd class="col-sm-8 h3 font-weight-normal text-secondary">{{ field.value }}</dd>
+                  <dd class="col-sm-8 h3 font-weight-normal text-secondary">{{ field.value | safe }}</dd>
                 </dl>
             </div>
             {% endif %}
