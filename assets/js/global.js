@@ -51,7 +51,23 @@ $( document ).ready(function() {
     return "<a class='button " + state + "'>" + text + "</div>";
   });
 
-
+  // Default behavior
+  // $('#id_password1').password();
+  $('#password').password({
+  shortPass: 'The password is too short',
+  badPass: 'Weak; try combining letters & numbers',
+  goodPass: 'Medium; try using special characters',
+  strongPass: 'Strong password',
+  containsField: 'The password contains your username',
+  enterPass: 'Type your password',
+  showPercent: false,
+  showText: true, // shows the text tips
+  animate: true, // whether or not to animate the progress bar on input blur/focus
+  animateSpeed: 'fast', // the above animation speed
+  field: false, // select the match field (selector or jQuery instance) for better password checks
+  fieldPartialMatch: true, // whether to check for partials in field
+  minimumLength: 4 // minimum password length (below this threshold, the score is 0)
+});
 
 
 });

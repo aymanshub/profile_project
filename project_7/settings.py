@@ -25,6 +25,7 @@ SECRET_KEY = '@^5abv&l*_)^swykr5itnt@5ud%n5llgj(!37w-g1nq2m5e03w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = []
 
 
@@ -40,15 +41,16 @@ INSTALLED_APPS = [
     'accounts',
     'ckeditor',
     'ckeditor_uploader',
+    # 'django.forms',
 ]
 
-MIDDLEWARE_CLASSES = [
+# MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -91,15 +93,30 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+                'OPTIONS': {
+                            'max_similarity': 0.3,
+                        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+                'OPTIONS': {
+                            'min_length': 14,
+                        }
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'project_7.validators.NumberValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'project_7.validators.UppercaseValidator',
+    },
+    {
+        'NAME': 'project_7.validators.LowercaseValidator',
+    },
+    {
+        'NAME': 'project_7.validators.SymbolValidator',
+    },
+    {
+        'NAME': 'project_7.validators.SamePasswordValidator',
     },
 ]
 
@@ -157,3 +174,4 @@ CKEDITOR_CONFIGS = {
     }
 }
 ###################################
+# FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'

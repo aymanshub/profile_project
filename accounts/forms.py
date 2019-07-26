@@ -2,6 +2,7 @@ from django import forms
 from django.core import validators
 from . import models
 from ckeditor.widgets import CKEditorWidget
+# from bootstrap_datepicker_plus import DatePickerInput
 from .widgets import FengyuanChenDatePickerInput
 
 
@@ -19,8 +20,7 @@ class ProfileForm(forms.ModelForm):
                           validators=[validators.MinLengthValidator(10)]
                           )
     birth_date = forms.DateField(
-        # input_formats=['%d/%m/%Y %H:%M'],
-        input_formats=['%d/%m/%Y'],
+        input_formats=['%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'],
         widget=FengyuanChenDatePickerInput()
     )
 
