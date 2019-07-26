@@ -125,3 +125,4 @@ dmypy.json
 # PyCharm stuff:
 .idea/
 *.jpg
+.idea/workspace.xml
