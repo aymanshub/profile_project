@@ -21,18 +21,14 @@
 
     {% for field in form.visible_fields %}
         <p>
-            {{ field.label_tag }}
-            {{ field.errors }}
-            {{ field }}
+        {{ field.label_tag }}
+        {{ field.errors }}
+        {{ field }}
+        {% if field.help_text %}
             <span class="helptext">{{ field.help_text }}</span>
+        {% endif %}
       </p>
     {% endfor %}
-    <div class="form-group">
-        <label for="default">
-            Password
-        </label>
-        <input id="password" type="password" class="form-control" />
-    </div>
     <input type="submit" class="button-primary" value="Sign Up">
 </form>
 {% endblock %}
