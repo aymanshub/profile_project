@@ -4,7 +4,6 @@ from django.contrib.auth import (authenticate, login, logout,
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import (AuthenticationForm, UserCreationForm,
                                        PasswordChangeForm)
-# from django.core.urlresolvers import reverse
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -70,9 +69,13 @@ def edit_profile(request):
         profile_form = forms.ProfileForm(request.POST, request.FILES,
                                          instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, 'Your profile was successfully updated!')
+            if user_form.has_changed():
+                user_form.save()
+            if profile_form.has_changed():
+                profile_form.save()
+            if user_form.has_changed() or profile_form.has_changed():
+                messages.success(request,
+                                 'Your profile was successfully updated!')
             return HttpResponseRedirect(reverse('accounts:view_profile'))
         else:
             messages.error(request, 'Please correct the error below.')
@@ -94,6 +97,8 @@ def view_profile(request):
                                    instance=request.user)
         profile_form = forms.ProfileForm(data=None,
                                          instance=request.user.profile)
+        # if not profile_form.avatar:
+
     return render(request, 'accounts/view_profile.html',
                   {
                       'user_form': user_form,

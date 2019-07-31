@@ -8,7 +8,6 @@
 {% endblock js_fc_datepicker %}
 
 {% block body %}
-{#<form method="POST" enctype="multipart/form-data">#}
 <form method="POST" action="{% url 'accounts:edit_profile' %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ user_form.media }}
@@ -16,10 +15,8 @@
     {{ profile_form.media }}
     {{ profile_form.as_p }}
     <input type="submit" class="button-primary" value="Save Profile">
-    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#register">Rigister Now!</button>
 
 </form>
-
 
 <!--=====================================
  FORM MODAL
@@ -27,130 +24,149 @@
 <div class="modal fade text-dark" id="register" tabindex="-1" role="dialog" aria-labelledby="register form" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-info text-white">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Your Avatar</h5>
+      <div class="modal-header" style="background-color:#537d7b">
+        <h5 class="modal-title" id="exampleModalLabel" style="color: white">Edit Your Avatar</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- Registeration Form -->
-        <form>
-          <h5 class="mb-4">Basic Info</h5>
-        <div class="row">
-          <div class="col-md-6 col-lg-4">
-            <div class="card mb-3">
-              <img src="img/Father_Son.jpg" class="card-img-top" alt="...">
-              <div class="card-body bg-dark">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card mb-3">
-              <img src="img/Father_Son.jpg" class="card-img-top" alt="...">
-              <div class="card-body bg-dark">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="card mb-3">
-              <img src="img/Father_Son.jpg" class="card-img-top" alt="...">
-              <div class="card-body bg-dark">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
           <div class="profile-img">
-                <img class= "img-fluid rounded d-none d-sm-block" src="{{ profile_form.instance.avatar.url }}" alt="..."/>
+            <img id="image" class= "img-fluid rounded d-none d-sm-block" src="" alt="editing profile picture..."/>
           </div>
-          <div class="form-group">
-            <label for="role">Job Role:</label>
-            <select class="custom-select">
-              <option value="full stack js developer">Full Stack JavaScript Developer</option>
-              <option value="front end developer">Front End Developer</option>
-              <option value="back end developer">Back End Developer</option>
-              <option value="designer">Designer</option>
-              <option value="student">Student</option>
-            </select>
-          </div>
-
           <hr class="my-4">
-          <h5 mb-4>Which Topics Interest You Most?</h5>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck1">
-            <label class="custom-control-label" for="customCheck1">JavaScript Frameworks</label>
-          </div>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck2">
-            <label class="custom-control-label" for="customCheck2">JavaScript Libraries</label>
-          </div>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck3">
-            <label class="custom-control-label" for="customCheck3">Node.JS</label>
-          </div>
-
-          <hr class="mb-4">
-          <h5 class="mb-4">Payment Info</h5>
-          <div class="form-row">
-            <div class="col-lg-6 form-group">
-              <label for="cc-num">Card Number:</label>
-              <input class="form-control" id="cc-num" type="text">
+          <div class="row">
+            <div class="col-sm-2">
+              <button type="button" class="button-primary js-crop-toggler fas fa-crop fa-lg" data-toggle="button" aria-pressed="true" autocomplete="off"></button>
             </div>
-
-            <div class="col-lg form-group">
-              <label for="zip">Zip Code:</label>
-              <input class="form-control" id="zip" type="text">
+            <div class="col-sm-2">
+              <button type="button" class="button-primary js-flip-V-toggler fas fa-arrows-alt-v fa-lg" data-toggle="button" aria-pressed="false" autocomplete="off"></button>
             </div>
-
-            <div class="col-lg form-group">
-              <label for="cvv">CVV:</label>
-              <input class="form-control" id="cvv" type="text">
+            <div class="col-sm-2">
+              <button type="button" class="button-primary js-flip-h-toggler fas fa-arrows-alt-h fa-lg" data-toggle="button" aria-pressed="false" autocomplete="off"></button>
+            </div>
+            <div class="col-sm-2">
+              <button type="button" class="button-primary js-rotate-left fas fa-undo fa-lg"></button>
+            </div>
+            <div class="col-sm-2">
+              <button type="button" class="button-primary js-rotate-right fas fa-redo fa-lg"></button>
             </div>
           </div>
-          <div class="form-row">
-            <label class="col-lg-12">Expiration Date:</label>
-
-            <div class="form-group col-lg-8">
-              <select class="custom-select" id="exp-month">
-                <option value="1">1 - January</option>
-                <option value="2">2 - February</option>
-                <option value="3">3 - March</option>
-                <option value="4">4 - April</option>
-                <option value="5">5 - May</option>
-                <option value="6">6 - June</option>
-                <option value="7">7 - July</option>
-                <option value="8">8 - August</option>
-                <option value="9">9 - September</option>
-                <option value="10">10 - October</option>
-                <option value="11">11 - November</option>
-                <option value="12">12 - December</option>
-              </select>
+          <hr class="my-4">
+          <div class="row">
+            <div class="col-sm-4">
+              <button type="button" class="button-primary js-save-settings text-sm">Save Settings</button>
             </div>
-
-            <div class="form-group">
-              <select class="custom-select" id="exp-year">
-                <option value="2016">2016</option>
-                <option value="2017">2017</option>
-                <option value="2018">2018</option>
-                <option value="2019">2019</option>
-                <option value="2020">2020</option>
-              </select>
+            <div class="col-sm-2">
+              <button type="button" class="button-secondary text-sm" data-dismiss="modal">Cancel</button>
             </div>
-
           </div>
-          <hr class="mb-4">
-          <button type="submit" class="btn btn-primary btn-lg">Register</button>
-        </form><!-- /Registeration Form -->
       </div>
     </div>
   </div>
 </div>
+
+{% endblock %}
+{% block javascript %}
+  <script>
+    $(function () {
+
+      /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+      $('#id_avatar').on('click touchstart' , function(){
+        $(this).val('');
+      });
+
+      $("#id_avatar").change(function () {
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $("#image").attr("src", e.target.result);
+            $("#register").modal("show");
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      /* SCRIPTS TO HANDLE THE CROPPER BOX */
+      var $image = $("#image");
+      var cropBoxData;
+      var canvasData;
+      $("#register").on("shown.bs.modal", function () {
+        $(image).cropper({
+          checkOrientation: false,
+          zoomable: false,
+          viewMode: 1,
+          aspectRatio: 1/1,
+          minCropBoxWidth: 100,
+          minCropBoxHeight: 100,
+          ready: function () {
+            {#$image.cropper("setCanvasData", canvasData);#}
+            {#$image.cropper("setCropBoxData", cropBoxData);#}
+            //$image.cropper("clear");
+          }
+        });
+      }).on("hidden.bs.modal", function () {
+        {#cropBoxData = $image.cropper("getCropBoxData");#}
+        {#canvasData = $image.cropper("getCanvasData");#}
+        $image.cropper("destroy");
+      });
+      $(".js-rotate-left").click(function () {
+        $image.cropper("rotate", -90);
+      });
+
+      $(".js-rotate-right").click(function () {
+        $image.cropper("rotate", 90);
+      });
+
+      //Crop Toggler
+      function crop_off() {
+        $image.cropper("clear");
+        $(this).one("click", crop_on);
+      }
+      function crop_on() {
+        $image.cropper("crop");
+        $(this).one("click", crop_off);
+      }
+      $(".js-crop-toggler").one("click", crop_off);
+
+      //Flip-H Toggler
+      function flip_h_off() {
+        $image.cropper("scaleX", 1);
+        $(this).one("click", flip_h_on);
+      }
+      function flip_h_on() {
+        $image.cropper("scaleX", -1);
+        $(this).one("click", flip_h_off);
+      }
+      $(".js-flip-h-toggler").one("click", flip_h_on);
+
+      //Flip-V Toggler
+      function flip_v_off() {
+        $image.cropper("scaleY", 1);
+        $(this).one("click", flip_v_on);
+      }
+      function flip_v_on() {
+        $image.cropper("scaleY", -1);
+        $(this).one("click", flip_v_off);
+      }
+      $(".js-flip-V-toggler").one("click", flip_v_on);
+
+      /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+      $(".js-save-settings").click(function () {
+        var cropData = $image.cropper("getData");
+        $("#id_x").val(cropData["x"]);
+        $("#id_y").val(cropData["y"]);
+        $("#id_height").val(cropData["height"]);
+        $("#id_width").val(cropData["width"]);
+        $("#id_rotate").val(cropData["rotate"]);
+        $("#id_scaleX").val(cropData["scaleX"]);
+        $("#id_scaleY").val(cropData["scaleY"]);
+        $('#register').modal('hide')
+        {#$("#formUpload").submit();#}
+      });
+
+    });
+  </script>
 
 {% endblock %}
