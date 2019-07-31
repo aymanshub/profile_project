@@ -90,8 +90,6 @@
 
       /* SCRIPTS TO HANDLE THE CROPPER BOX */
       var $image = $("#image");
-      var cropBoxData;
-      var canvasData;
       $("#register").on("shown.bs.modal", function () {
         $(image).cropper({
           checkOrientation: false,
@@ -101,14 +99,11 @@
           minCropBoxWidth: 100,
           minCropBoxHeight: 100,
           ready: function () {
-            {#$image.cropper("setCanvasData", canvasData);#}
-            {#$image.cropper("setCropBoxData", cropBoxData);#}
-            //$image.cropper("clear");
+            // we can run methods in here
           }
         });
       }).on("hidden.bs.modal", function () {
-        {#cropBoxData = $image.cropper("getCropBoxData");#}
-        {#canvasData = $image.cropper("getCanvasData");#}
+        // we can run methods in here
         $image.cropper("destroy");
       });
       $(".js-rotate-left").click(function () {
@@ -163,7 +158,6 @@
         $("#id_scaleX").val(cropData["scaleX"]);
         $("#id_scaleY").val(cropData["scaleY"]);
         $('#register').modal('hide')
-        {#$("#formUpload").submit();#}
       });
 
     });

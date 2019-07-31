@@ -3,7 +3,6 @@ from django import forms
 from django.core import validators
 from . import models
 from ckeditor.widgets import CKEditorWidget
-# from bootstrap_datepicker_plus import DatePickerInput
 from .widgets import FengyuanChenDatePickerInput
 
 
@@ -26,7 +25,8 @@ class ProfileForm(forms.ModelForm):
     )
     avatar = forms.ImageField(widget=forms.FileInput, required=False)
 
-    # Avatar parameters will be hidden
+    # Avatar parameters will be hidden,
+    # need them for FE to BE calculations
     x = forms.FloatField(widget=forms.HiddenInput(), required=False)
     y = forms.FloatField(widget=forms.HiddenInput(), required=False)
     width = forms.FloatField(widget=forms.HiddenInput(), required=False)
@@ -60,13 +60,10 @@ class ProfileForm(forms.ModelForm):
             'hobby',
         ]
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['avatar'].widget.attrs = {'id': 'selectedFile'}
-
     def save(self):
-        # photo = super(PhotoForm, self).save()
         profile = super().save()
+
+        # save avatar picture if only a new one has been selected
         if len(self.files):
             x = self.cleaned_data.get('x')
             y = self.cleaned_data.get('y')

@@ -21,7 +21,7 @@ def sign_in(request):
                 if user.is_active:
                     login(request, user)
                     return HttpResponseRedirect(
-                        reverse('home')  # TODO: go to profile
+                        reverse('home')
                     )
                 else:
                     messages.error(
@@ -51,7 +51,7 @@ def sign_up(request):
                 request,
                 "You're now a user! You've been signed in, too."
             )
-            return HttpResponseRedirect(reverse('accounts:edit_profile'))  # TODO: go to profile
+            return HttpResponseRedirect(reverse('accounts:edit_profile'))
     return render(request, 'accounts/sign_up.html', {'form': form})
 
 
@@ -68,6 +68,8 @@ def edit_profile(request):
                                    instance=request.user)
         profile_form = forms.ProfileForm(request.POST, request.FILES,
                                          instance=request.user.profile)
+
+        # Don't bother to save unless user or profile forms were changed
         if user_form.is_valid() and profile_form.is_valid():
             if user_form.has_changed():
                 user_form.save()
@@ -97,7 +99,6 @@ def view_profile(request):
                                    instance=request.user)
         profile_form = forms.ProfileForm(data=None,
                                          instance=request.user.profile)
-        # if not profile_form.avatar:
 
     return render(request, 'accounts/view_profile.html',
                   {
