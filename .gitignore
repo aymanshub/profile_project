@@ -126,3 +126,4 @@ dmypy.json
 .idea/
 *.jpg
 .idea/workspace.xml
+!assets/images/passwordstrength.jpg
